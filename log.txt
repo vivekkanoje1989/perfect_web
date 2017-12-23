@@ -1,0 +1,240 @@
+
+ index --  2017-11-13 06:11:02
+ data initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-23T18:30:00.000Z
+            [veh_type] => PICKUP
+            [freight] => 69
+        )
+
+)
+
+ data --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-23T18:30:00.000Z
+            [veh_type] => PICKUP
+            [freight] => 69
+        )
+
+)
+
+ data -memo- key found  
+ save_appData --  2017-11-13 06:11:02
+ save_appData initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-23T18:30:00.000Z
+            [veh_type] => PICKUP
+            [freight] => 69
+        )
+
+)
+
+ save_appData lr_no --  Lr223
+ save_appData  select query: SELECT * FROM memo_tbl WHERE `lr_no`= 'Lr223' AND `date`= '23-11-2017' AND `memo_from`= 'Mumbai' AND `memo_to`= 'Chakan' AND `lorry_no`= 'MH23 4567' AND `invoice_no`= 'Inv223' 
+ save_appData  proceed insert: 0 
+ index --  2017-11-13 06:11:40
+ data initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => PICKUP
+            [freight] => 789
+        )
+
+)
+
+ data --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => PICKUP
+            [freight] => 789
+        )
+
+)
+
+ data -memo- key found  
+ save_appData --  2017-11-13 06:11:40
+ save_appData initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => PICKUP
+            [freight] => 789
+        )
+
+)
+
+ save_appData lr_no --  Lr223
+ save_appData  select query: SELECT * FROM memo_tbl WHERE `lr_no`= 'Lr223' AND `date`= '22-11-2017' AND `memo_from`= 'Mumbai' AND `memo_to`= 'Chakan' AND `lorry_no`= 'MH23 4567' AND `invoice_no`= 'Inv223' 
+ save_appData  proceed insert: 0 
+ index --  2017-11-13 06:11:05
+ data initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => LPT
+            [freight] => 789
+        )
+
+)
+
+ data --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => LPT
+            [freight] => 789
+        )
+
+)
+
+ data -memo- key found  
+ save_appData --  2017-11-13 06:11:05
+ save_appData initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => LPT
+            [freight] => 789
+        )
+
+)
+
+ save_appData lr_no --  Lr223
+ save_appData  select query: SELECT * FROM memo_tbl WHERE `lr_no`= 'Lr223' AND `date`= '22-11-2017' AND `memo_from`= 'Mumbai' AND `memo_to`= 'Chakan' AND `lorry_no`= 'MH23 4567' AND `invoice_no`= 'Inv223' 
+ save_appData  proceed insert: 0 
+ index --  2017-11-13 06:11:48
+ data initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => LCV
+            [freight] => 369
+        )
+
+)
+
+ data --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => LCV
+            [freight] => 369
+        )
+
+)
+
+ data -memo- key found  
+ save_appData --  2017-11-13 06:11:48
+ save_appData initial --  stdClass Object
+(
+    [data] => stdClass Object
+        (
+            [memo] => memo
+            [memo_from] => Mumbai
+            [memo_to] => Chakan
+            [lr_no] => Lr223
+            [invoice_no] => Inv223
+            [lorry_no] => MH23 4567
+            [date] => 2017-11-22T18:30:00.000Z
+            [veh_type] => LCV
+            [freight] => 369
+        )
+
+)
+
+ save_appData lr_no --  Lr223
+ save_appData  select query:updateID====> 3
+ save_appData  select query: SELECT * FROM memo_tbl WHERE `lr_no`= 'Lr223' AND `date`= '2017-11-22' AND `memo_from`= 'Mumbai' AND `memo_to`= 'Chakan' AND `lorry_no`= 'MH23 4567' AND `invoice_no`= 'Inv223' 
+ save_appData update : 1 
+ index --  2017-11-13 08:11:43
+ data initial --  
+ index --  2017-11-15 01:11:04
+ data initial --  
+ index --  2017-11-16 01:11:41
+ data initial --  
+ index --  2017-12-15 02:12:25
+ data initial --  
+ index --  2017-12-18 11:12:58
+ data initial --  
