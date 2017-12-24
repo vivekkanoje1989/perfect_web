@@ -56,7 +56,7 @@ class Perfect extends CI_Controller {
 	}
 
 	public function godashboard(){
-		$this->load->view('lr_records', $data);
+		$this->load->view('dashboard');
 	}
 
 	public function goMemo(){
@@ -191,7 +191,7 @@ class Perfect extends CI_Controller {
 		}
 
 		fwrite($fp,"\r\n save_appData  select query: " . $this->db->last_query());		
-		
+		$created = date("Y-m-d");
 		//save data to database
 			$rec  = array( 
 				'servicetaxno' => $data->data->servicetaxno,
@@ -209,7 +209,8 @@ class Perfect extends CI_Controller {
 				'material_type' => $data->data->material_type,
 				'num_packages' => $data->data->num_packages,				
 				'actual_weight' => $data->data->actual_weight,
-				'gst_tax' => $data->data->gst_tax
+				'gst_tax' => $data->data->gst_tax,
+				'created' => $created
 			);
 
 
@@ -253,7 +254,7 @@ class Perfect extends CI_Controller {
 		}
 
 		fwrite($fp,"\r\n save_appData  select query: " . $this->db->last_query());		
-		
+		$created = date("Y-m-d");
 		//save data to database
 			$rec  = array( 
 				'memo_from' => $data->data->memo_from,		
@@ -263,7 +264,8 @@ class Perfect extends CI_Controller {
 				'lorry_no' => $data->data->lorry_no,		
 				'date' => $data->data->date,		
 				'veh_type' => $data->data->veh_type,				
-				'freight' => $data->data->freight
+				'freight' => $data->data->freight,
+				'created' => $created
 			);
 
 			

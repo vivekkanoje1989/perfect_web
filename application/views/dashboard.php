@@ -99,6 +99,12 @@ header("location: login");
             .active{
                 border-bottom: 4px solid;
             }
+            .corner_btn{
+                display: inline-block;
+            }
+            .view_btn{
+                color: black;
+            }
         </style>
     </head>
     <body>
@@ -123,19 +129,18 @@ header("location: login");
             <div class="component">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Today's Lorry Recipt</h3>
-                    <button class="btn btn-default pull-right" style="margin-top: -24px; border-radius: 14px;"><a href="" >View Records</a></button>
+                    <h3 class="panel-title corner_btn">Today's Lorry Recipt</h3>
+                    <a class="pull-right view_btn" href=""  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
                 </div>
                 <div class="panel-body">
                     Panel content
-                    <a href="#" class="btn btn-info">Info</a>
                 </div>
             </div>
 
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Today's Memo</h3>
-                    <button class="btn btn-default pull-right" style="margin-top: -24px; border-radius: 14px;"><a href="" >View Records</a></buttton>
+                    <h3 class="panel-title corner_btn">Today's Memo</h3>
+                    <a class="pull-right view_btn" href=""  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
                 </div>
                 <div class="panel-body">
                     Panel content
