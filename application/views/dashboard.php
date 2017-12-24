@@ -64,23 +64,62 @@ header("location: login");
                 border: 1px solid aqua !important;
                 border-radius: 5px !important;
             }
+            .company{
+                color: aliceblue;
+                background: black;
+                font-family: serif;
+                font-style: oblique;
+                font-size: xx-large;
+            }
+            .right{
+                float:right;
+                margin-right: 10px;
+            }
+            .left{
+                float:left;
+                margin-left: 10px;
+            }
+            .clearfixs{
+                display: block;
+                margin-top: 1px;
+                background: black;
+                padding-top: 3px;
+                text-transform: uppercase;
+                width: 100%;
+                font-size: 0.69em;
+                line-height: 2.2;
+            }
+            .user-logout{
+                margin-top: 1px;
+                background: black;
+                height: 25px;
+                font-style: oblique;
+                padding-top: 2px;
+            }
+            .active{
+                border-bottom: 4px solid;
+            }
         </style>
     </head>
     <body>
-        <div class="container">
-            <!-- Top Navigation -->
-            <div class="codrops-top clearfix">
-                <a ><i class="fa fa-user-circle-o" style="font-size:20px"></i><span>Hello!<?php echo " "; echo $user_type; echo " "; echo $name; ?></span></a>
-                <span class="right"><a href="<?php echo base_url();?>index.php/perfect/logout"><span>LogOut </span><i class="fa fa-sign-out" style="font-size:20px" aria-hidden="true"></i></a></span>
+        <nav>
+            <header>
+                <div class="company"><center>Perfect Transport Solution</center></div> 
+                <div class="user-logout">
+                    <a class="left"><i class="fa fa-user-circle-o"></i><span> Hello!<?php echo " "; echo $user_type; echo " "; echo $name; ?></span></a>
+                    <span class="right"><a href="<?php echo base_url();?>index.php/perfect/logout"><span>LogOut  </span><i class="fa fa-sign-out" style="font-size:20px" aria-hidden="true"></i></a></span>
+                </div>          
+            </header>            
+            <div class="codrops-top clearfixs">              
+               <span><a href="<?php echo base_url();?>index.php/perfect/godashboard" class="codrops-icon codrops-icon-add active"><i class="fa fa-home" style="font-size:20px"></i>Dashboard</a></span>
                <span><a href="<?php echo base_url();?>index.php/perfect/addUser" class="codrops-icon codrops-icon-add"><i class="fa fa-user-plus" style="font-size:20px"></i>Add Users</a></span>
-               <span><a href="<?php echo base_url();?>index.php/perfect/godashboard" class="codrops-icon codrops-icon-add"><i class="fa fa-home" style="font-size:20px"></i>Dashboard</a></span>
                <span><a href="<?php echo base_url();?>index.php/perfect/goLR" class="codrops-icon codrops-icon-add"><i class="fa fa-book" style="font-size:20px"></i>LR Records</a></span>
                <span><a href="<?php echo base_url();?>index.php/perfect/goMemo" class="codrops-icon codrops-icon-add"><i class="fa fa-book" style="font-size:20px"></i>Memo Records</a></span>
             </div>
-            <header>
-                <h1><em>Perfect Transport Solution</em> <span>Dashboard</span></h1> 
-               
-            </header>
+        </nav>
+        <div class="container">
+            
+          
             <div class="component">
             <div class="panel panel-primary">
                 <div class="panel-heading">
