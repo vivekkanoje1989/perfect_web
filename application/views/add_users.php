@@ -128,7 +128,6 @@ header("location: login");
         <div class="container">
            
             <div class="component">
-             <a class="codrops-icon codrops-icon-prev" href="<?php echo base_url();?>index.php/perfect/back"><span>Back</span></a>
             <?php echo form_open('perfect/save_User'); ?>
             	<form method="post">
 					<table align="center">
