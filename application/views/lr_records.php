@@ -62,6 +62,11 @@ header("location: login");
             .opt{
                 border: 1px solid aqua !important;
                 border-radius: 5px !important;
+                margin: 4px;
+                padding: 4px;
+            }
+            .sticky-wrap {
+                margin: 1em 0;
             }
             .company{
                 color: aliceblue;
@@ -131,7 +136,7 @@ header("location: login");
                 <?php 
                     $js = 'id="month", class="opt"';
                     $options = array(
-                            'Select' => 'Select Month',
+                            'Select' => 'Month',
                             '01' => 'January',
                             '02' => 'February',
                             '03' => 'March',
@@ -154,7 +159,7 @@ header("location: login");
 
                 $js = 'id="year", class="opt"';
                 $options = array(
-                        'Select' => 'Select',                               
+                        'Select' => 'Year',                               
                         );
 
                 $cur_year = date('Y');
@@ -167,8 +172,8 @@ header("location: login");
                 echo "</div>"; 
             ?>
      
-     <button class="btn btn-default opt" type="submit" id="gen_su" name="submit" value="gen_su"  ><span class="fa fa-search">  Search</span></button>   
-     <button class="btn btn-default opt" ><span class="fa fa-refresh" aria-hidden="true" ><a style="color: black;" href="<?php echo base_url();?>index.php/perfect/refresh" >  Refresh</a></span></button>   
+     <button class="btn btn-default opt" type="submit" id="gen_su" name="submit" value="gen_su" title="Search" ><span class="fa fa-search"></span></button>   
+     <button class="btn btn-default opt" title="Refresh"><span class="fa fa-refresh" aria-hidden="true" ><a style="color: black;" href="<?php echo base_url();?>index.php/perfect/refresh" ></a></span></button>   
     </div><br/>
     
   </form>

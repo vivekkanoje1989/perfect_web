@@ -30,32 +30,7 @@ header("location: login");
         <!--[if IE]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-    <script>
-          $(document).ready(function() {      
-             
-            $(function(){  
-                 $( '#gen_su' ).click(function() {
-                   if($('#month').val() == "Select"){
-                     alert( "Please! Select Month." );  
-                     return false;
-                   }else{
-                     return true;
-                   }
-              });
-            }); 
-
-            $(function(){  
-                 $( '#gen_su' ).click(function() {
-                   if($('#year').val() == "Select"){
-                     alert( "Please! Select Year." );  
-                     return false;
-                   }else{
-                     return true;
-                   }
-              });
-            });        
-        });
-    </script>
+   
         <style type="text/css">
             table{
                 border: 1px solid darkgrey;
@@ -105,6 +80,31 @@ header("location: login");
             .view_btn{
                 color: black;
             }
+            .countl{
+                background: #2196f3;
+                width: 50%;
+                height: 50%;
+                color: white;
+                border-radius: 15px;
+                border: 5px solid aquamarine;
+                padding: 5px;
+            }
+            .countm{
+                background: #4caf50;
+                width: 50%;
+                height: 50%;
+                color: white;
+                border-radius: 15px;
+                border: 5px solid #c8f5ca85;
+                padding: 5px;
+            }
+            .textd{
+                margin-left: 11px;
+                font-size: 1.6rem;
+                font-family: serif;
+                font-style: italic;
+                color: black;
+            }
         </style>
     </head>
     <body>
@@ -133,7 +133,7 @@ header("location: login");
                     <a class="pull-right view_btn" href=""  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <span class="countl" >3</span> <span class="textd">Lorry Recipt recorded today.</span>
                 </div>
             </div>
 
@@ -143,7 +143,7 @@ header("location: login");
                     <a class="pull-right view_btn" href=""  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <span class="countm">3</span> <span class="textd"> Memo recorded today.</span>
                 </div>
             </div>               
             
