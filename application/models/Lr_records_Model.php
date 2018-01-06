@@ -22,12 +22,14 @@ class Lr_records_Model extends CI_Model
     public function fetch_records($limit, $start, $year, $month) {
         $this->db->limit($limit, $start);
         if ($year != 0 && $month != 0) {
-                $this->db->where("EXTRACT(YEAR FROM Lr_Date) = $year AND EXTRACT(MONTH FROM Lr_Date) = $month");
-                $query = $this->db->get("lr_tbl");
-           } else{
-                $query = $this->db->get("lr_tbl");
-           }  
-         
+            $this->db->where("EXTRACT(YEAR FROM Lr_Date) = $year AND EXTRACT(MONTH FROM Lr_Date) = $month");
+            $this->db->order_by("created","desc");
+            $query = $this->db->get("lr_tbl");
+        } else{
+            $this->db->order_by("created","desc");
+            $query = $this->db->get("lr_tbl");
+        }  
+              
 
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
@@ -36,7 +38,7 @@ class Lr_records_Model extends CI_Model
             return $data;
         }
         return false;
-   }
+    }
 }
 
 ?>

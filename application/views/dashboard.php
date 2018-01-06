@@ -130,10 +130,10 @@ header("location: login");
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title corner_btn">Today's Lorry Recipt</h3>
-                    <a class="pull-right view_btn" href=""  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
+                    <a class="pull-right view_btn" href="<?php echo base_url();?>index.php/perfect/goLR"  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
                 </div>
                 <div class="panel-body">
-                    <span class="countl" >3</span> <span class="textd">Lorry Recipt recorded today.</span>
+                    <span class="countl" ><?php echo $count_lr; ?></span> <span class="textd">Lorry Recipt recorded today.</span>
                 </div>
             </div>
 
@@ -143,7 +143,7 @@ header("location: login");
                     <a class="pull-right view_btn" href=""  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
                 </div>
                 <div class="panel-body">
-                    <span class="countm">3</span> <span class="textd"> Memo recorded today.</span>
+                    <span class="countm"><?php echo $count_memo; ?></span> <span class="textd"> Memo recorded today.</span>
                 </div>
             </div>               
             

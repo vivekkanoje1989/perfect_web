@@ -56,7 +56,20 @@ class Perfect extends CI_Controller {
 	}
 
 	public function godashboard(){
-		$this->load->view('dashboard');
+		$check_date = date('Y-m-d');
+		$check_date = (string)$check_date;
+		$query = $this->db->query("SELECT * FROM `lr_tbl` WHERE `created`= '$check_date'");
+		$count_lr = count($query->result());
+
+		$query = $this->db->query("SELECT * FROM `memo_tbl` WHERE `created`= '$check_date'");
+		$count_memo = count($query->result());
+
+		$data = array(
+			'count_lr' => $count_lr,
+			'count_memo' => $count_memo
+		);
+		
+		$this->load->view('dashboard', $data);
 	}
 
 	public function goMemo(){
@@ -87,7 +100,7 @@ class Perfect extends CI_Controller {
 			//$data['result'] = $this->show_lr($id);
 			if ($v[0]->user_type == "admin") {
 				// $this->pagination_rec();
-				$this->load->view('dashboard');
+				$this->godashboard();
 			}else{
 				$data = array(
 					'error_message' => 'Use Admin Username and Password Only !'
