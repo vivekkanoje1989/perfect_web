@@ -21,7 +21,12 @@ header("location: login");
         if (array_key_exists('consigner_name', $row)) { $consigner_name = $row['consigner_name']; }else{ $consigner_name = ""; }
         if (array_key_exists('consigner_Addr', $row)) { $consigner_Addr = $row['consigner_Addr']; }else{ $consigner_Addr = ""; }
         if (array_key_exists('consignee_name', $row)) { $consignee_name = $row['consignee_name']; }else{ $consignee_name = ""; }
-        if (array_key_exists('consignee_Addr', $row)) { $consignee_Addr = $row['consignee_Addr']; }else{ $consignee_Addr = ""; }
+        if (array_key_exists('consignee_Addr_l1', $row)) { $consignee_Addr_l1 = $row['consignee_Addr_l1']; }else{ $consignee_Addr_l1 = ""; }
+        if (array_key_exists('consignee_Addr_l2', $row)) { $consignee_Addr_l2 = $row['consignee_Addr_l2']; }else{ $consignee_Addr_l2 = ""; }
+        if (array_key_exists('consignee_Addr_l3', $row)) { $consignee_Addr_l3 = $row['consignee_Addr_l3']; }else{ $consignee_Addr_l3 = ""; }
+        if (array_key_exists('consignee_state', $row)) { $consignee_state = $row['consignee_state']; }else{ $consignee_state = ""; }
+        if (array_key_exists('consignee_state_cd', $row)) { $consignee_state_cd = $row['consignee_state_cd']; }else{ $consignee_state_cd = ""; }
+        if (array_key_exists('consignee_gstn', $row)) { $consignee_gstn = $row['consignee_gstn']; }else{ $consignee_gstn = ""; }
         if (array_key_exists('from', $row)) { $from = $row['from']; }else{ $from =  "" ;}
         if (array_key_exists('to', $row)) { $to = $row['to']; }else{ $to = ""; }
         if (array_key_exists('invoice_no', $row)) { $invoice_no = $row['invoice_no']; }else{ $invoice_no = ""; }
@@ -54,7 +59,7 @@ header("location: login");
         <meta name="description" content="Sticky Table Headers Revisited: Creating functional and flexible sticky table headers" />
         <meta name="keywords" content="Sticky Table Headers Revisited" />
         <meta name="author" content="Codrops" />
-        <link rel="shortcut icon" href="../favicon.ico">
+        <link rel="shortcut icon" href="../../favicon.ico">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/lr_recpage/normalize.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/lr_recpage/demos.css" />
@@ -134,6 +139,9 @@ header("location: login");
             .view_btn{
                 color: black;
             }
+            .consignee{
+                background: yellow !important;
+            }
         </style>
     </head>
     <body>
@@ -155,7 +163,7 @@ header("location: login");
         <div class="container">
            
             <div class="component">
-            <a class="codrops-icon codrops-icon-prev" href="<?php echo base_url();?>index.php/perfect/back"><span>Back</span></a>
+            <a class="codrops-icon codrops-icon-prev" href="<?php echo base_url();?>index.php/perfect/back_lr"><span>Back</span></a>
             <form method="post" action="<?php echo base_url();?>index.php/perfect/custom_lr" >
                 <input class="hidden" name="id" value="<?php echo $id;?>" readonly="true" />
             <table>
@@ -209,16 +217,46 @@ header("location: login");
                        <input class="inp" name="consigner_Addr" value="<?php echo $consigner_Addr;?>" readonly="true"/>
                     </td>
                 </tr>
-                <tr>
+                <tr class="consignee">
                     <td style="width: 60%;">Consignee Name</td>
                     <td style="width: 40%;">     
-                       <input class="inp" name="consignee_name" value="<?php echo $consignee_name;?>" readonly="true"/>
+                       <input type="text" class="inp" name="consignee_name" value="<?php echo $consignee_name;?>" />
                     </td>
                 </tr>
-                <tr>
-                    <td style="width: 60%;">Consignee Address</td>
+                <tr class="consignee">
+                    <td style="width: 60%;">Consignee Address line 1</td>
                     <td style="width: 40%;">     
-                       <input class="inp" name="consignee_Addr" value="<?php echo $consignee_Addr;?>" readonly="true"/>
+                       <input type="text" class="inp" name="consignee_Addr_l1" value="<?php echo $consignee_Addr_l1;?>"/>
+                    </td>
+                </tr>
+                <tr class="consignee">
+                    <td style="width: 60%;">Consignee Address line 2</td>
+                    <td style="width: 40%;">     
+                       <input type="text" class="inp" name="consignee_Addr_l2" value="<?php echo $consignee_Addr_l2;?>"/>
+                    </td>
+                </tr>
+                <tr class="consignee">
+                    <td style="width: 60%;">Consignee Address line 3</td>
+                    <td style="width: 40%;">     
+                       <input type="text" class="inp" name="consignee_Addr_l3" value="<?php echo $consignee_Addr_l3;?>"/>
+                    </td>
+                </tr>
+                <tr class="consignee">
+                    <td style="width: 60%;">Consignee State</td>
+                    <td style="width: 40%;">    
+                       <input type="text" class="inp" name="consignee_state" value="<?php echo $consignee_state;?>"/>
+                    </td>
+                </tr>
+                <tr class="consignee">
+                    <td style="width: 60%;">Consignee State Code</td>
+                    <td style="width: 40%;">     
+                       <input type="text" class="inp" name="consignee_state_cd" value="<?php echo $consignee_state_cd;?>"/>
+                    </td>
+                </tr>
+                <tr class="consignee">
+                    <td style="width: 60%;">Consignee GSTN No</td>
+                    <td style="width: 40%;">     
+                       <input type="text" class="inp" name="consignee_gstn" value="<?php echo $consignee_gstn;?>" />
                     </td>
                 </tr>
                 <tr>
@@ -325,7 +363,7 @@ header("location: login");
                 <tr>
                     <td style="width: 60%;">Mail Box</td>
                     <td style="width: 40%;">     
-                       <textarea class="inp admin" name="mail_box" required ><?php echo htmlspecialchars($mail_box);?></textarea>
+                       <textarea class="inp admin" name="mail_box" ><?php echo htmlspecialchars($mail_box);?></textarea>
                     </td>
                 </tr>
                 

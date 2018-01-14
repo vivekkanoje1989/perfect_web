@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="en">
+<link rel="shortcut icon" href="../../favicon.ico">
 <head>
 	<meta charset="utf-8">
 	<title>Welcome to CodeIgniter</title>

@@ -39,6 +39,63 @@ class Lr_records_Model extends CI_Model
         }
         return false;
     }
+
+    public function memo_count($year, $month) {
+        if ($year != 0 && $month != 0) {
+            //$this->db->where("EXTRACT(YEAR FROM Lr_Date) = $year AND EXTRACT(MONTH FROM Lr_Date) = $month");        
+            //return $this->db->count_all("lr_tbl");
+           // $query = $this->db->get("lr_tbl");
+            $query = $this->db->query("SELECT * FROM lr_tbl WHERE EXTRACT(YEAR FROM Lr_Date) = '".$year."' AND EXTRACT(MONTH FROM Lr_Date) = '".$month."' ");
+             
+            return $query->num_rows();
+        }else{
+            return $this->db->count_all("lr_tbl");
+        }
+       
+    }
+
+    public function fetch_memo($limit, $start, $year, $month) {
+        $this->db->limit($limit, $start);
+        if ($year != 0 && $month != 0) {
+            $this->db->where("EXTRACT(YEAR FROM Lr_Date) = $year AND EXTRACT(MONTH FROM Lr_Date) = $month");
+            $this->db->order_by("created","desc");
+            $query = $this->db->get("lr_tbl");
+        } else{
+            $this->db->order_by("created","desc");
+            $query = $this->db->get("lr_tbl");
+        }  
+              
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+    }
+
+    public function get_mis($daterangeFrom, $daterangeTo) {
+       
+        if ($daterangeFrom != '' && $daterangeTo != '') {
+            $this->db->where("Lr_Date >= '$daterangeFrom' AND Lr_Date <= '$daterangeTo'");
+            $this->db->order_by("created","desc");
+            $query = $this->db->get("lr_tbl");
+        } else{
+            $this->db->order_by("created","desc");
+            $query = $this->db->get("lr_tbl");
+        }                
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result_array() as $row) {
+                $data[] = $row;                
+            }
+            return $data;
+        }
+        return false;
+    }
+
+    
 }
 
 ?>

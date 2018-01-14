@@ -15,7 +15,7 @@ header("location: login");
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Lr records</title>
+        <title>Memo records</title>
         <meta name="description" content="Sticky Table Headers Revisited: Creating functional and flexible sticky table headers" />
         <meta name="keywords" content="Sticky Table Headers Revisited" />
         <meta name="author" content="Codrops" />
@@ -123,53 +123,47 @@ header("location: login");
             <div class="codrops-top clearfixs">              
                <span><a href="<?php echo base_url();?>index.php/perfect/godashboard" class="codrops-icon codrops-icon-add"><i class="fa fa-home" style="font-size:20px"></i>Dashboard</a></span>
                <span><a href="<?php echo base_url();?>index.php/perfect/addUser" class="codrops-icon codrops-icon-add"><i class="fa fa-user-plus" style="font-size:20px"></i>Add Users</a></span>
-               <span><a href="<?php echo base_url();?>index.php/perfect/goLR" class="codrops-icon codrops-icon-add active"><i class="fa fa-book" style="font-size:20px"></i>LR Records</a></span>
-               <span><a href="<?php echo base_url();?>index.php/perfect/goMemo" class="codrops-icon codrops-icon-add"><i class="fa fa-book" style="font-size:20px"></i>Memo Records</a></span>
+               <span><a href="<?php echo base_url();?>index.php/perfect/goLR" class="codrops-icon codrops-icon-add "><i class="fa fa-book" style="font-size:20px"></i>LR Records</a></span>
+               <span><a href="<?php echo base_url();?>index.php/perfect/goMemo" class="codrops-icon codrops-icon-add active"><i class="fa fa-book" style="font-size:20px"></i>Memo Records</a></span>
             </div>
         </nav>
         <div class="container">
             <div class="component">
-                <?php echo form_open('perfect/pagination_lr'); ?>
+                <?php echo form_open('perfect/pagination_memo'); ?>
                 <form method="post">
                 <div style="display: inline-flex;">
             
                 <?php 
-                    $js = 'id="month", class="opt"';
-                    $options = array(
-                            'Select' => 'Month',
-                            '01' => 'January',
-                            '02' => 'February',
-                            '03' => 'March',
-                            '04' => 'April',
-                            '05' => 'May',
-                            '06' => 'June',
-                            '07' => 'July',
-                            '08' => 'August',
-                            '09' => 'September',
-                            '10' => 'October',
-                            '11' => 'November',
-                            '12' => 'December',
-                            );
+                    $query = $this->db->query("SELECT lr_no FROM memo_tbl");
+                    $options = array();                         
+                    $options['Select'] = "Select LR";
+
+                    if ($query->num_rows() > 0) {
+                        foreach ($query->result_array() as $row) {
+                            $options[] = $row;
+                        }
+                    }else{ }
+                    $js = 'id="check_lr_no", class="opt"';                   
             
                     echo "<div>";
-                    echo form_dropdown('month', $options, '0', $js);
+                    echo form_dropdown('check_lr_no', $options, '0', $js);
                     echo "</div>"; 
                 ?>
                 <?php 
 
-                $js = 'id="year", class="opt"';
-                $options = array(
-                        'Select' => 'Year',                               
-                        );
+                // $js = 'id="year", class="opt"';
+                // $options = array(
+                //         'Select' => 'Year',                               
+                //         );
 
-                $cur_year = date('Y');
-                for($year = '2015'; $year <= ($cur_year+10); $year++) {
-                    $options[$year] = $year;
-                }   
+                // $cur_year = date('Y');
+                // for($year = '2015'; $year <= ($cur_year+10); $year++) {
+                //     $options[$year] = $year;
+                // }   
         
-                echo "<div>";
-                echo form_dropdown('year', $options, '0', $js);
-                echo "</div>"; 
+                // echo "<div>";
+                // echo form_dropdown('year', $options, '0', $js);
+                // echo "</div>"; 
             ?>
      
      <button class="btn btn-default opt" type="submit" id="gen_su" name="submit" value="gen_su" title="Search" ><span class="fa fa-search"></span></button>   
@@ -184,8 +178,7 @@ header("location: login");
                         <tr>
                             <th>Sr. No.</th>
                             <th>LR No.</th>
-                            <th>LR Date</th>
-                            <th>Consignee Name</th>
+                            <th>Invoice No.</th>
                             <th>From</th>
                             <th>To</th>
                             <th></th>
@@ -198,12 +191,11 @@ header("location: login");
                          foreach($results as $row){ ?>
                         <tr>
                             <td><?php if (array_key_exists('id', $row)) { echo $row->id; }else{} ?></td>
-                            <td><?php if (array_key_exists('lrno', $row)) { echo $row->lrno; }else{}?></td>
-                            <td><?php if (array_key_exists('Lr_Date', $row)) { echo $row->Lr_Date; }else{}?></td>
-                            <td><?php if (array_key_exists('consignee_name', $row)) { echo $row->consignee_name; }else{}?></td>
-                            <td><?php if (array_key_exists('from_l', $row)) { echo $row->from_l; }else{}?></td>
-                            <td><?php if (array_key_exists('to_l', $row)) { echo $row->to_l; }else{}?></td>                           
-                            <td><a  href="<?php echo base_url();?>index.php/perfect/edit_lr/<?php echo $row->id;?>"><i class="fa fa-edit" style="font-size:24px"></i><span>Edit</span></a></td>
+                            <td><?php if (array_key_exists('lr_no', $row)) { echo $row->lr_no; }else{}?></td>
+                            <td><?php if (array_key_exists('invoice_no', $row)) { echo $row->invoice_no; }else{}?></td>
+                            <td><?php if (array_key_exists('memo_from', $row)) { echo $row->memo_from; }else{}?></td>
+                            <td><?php if (array_key_exists('memo_to', $row)) { echo $row->memo_to; }else{}?></td>                           
+                            <td><a  href="<?php echo base_url();?>index.php/perfect/edit_memo/<?php echo $row->id;?>"><i class="fa fa-edit" style="font-size:24px"></i><span>Edit</span></a></td>
                         </tr>
                         <?php } }?>
                     </tbody>

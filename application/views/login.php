@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <meta name="description" content="Login and Registration Form with HTML5 and CSS3" />
         <meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class" />
         <meta name="author" content="Codrops" />
-        <link rel="shortcut icon" href="../favicon.ico"> 
+        <link rel="shortcut icon" href="../../favicon.ico"> 
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/css/demo.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/css/style.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/css/animate-custom.css" />
@@ -119,5 +119,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>  
             </section>
         </div>
+        <!-- botttom bar -->
+        <div class="codrops-top " style="line-height: 46px;">
+            <span class="right" >
+                <a href="">
+                    <strong><span>Powered By</span><a href="https://www.edigitech.in/">Edigitech Solutions</a></strong>
+                </a>
+            </span>
+            <div class="clr"></div>
+        </div> <!--/ botttom bar -->
     </body>
 </html>

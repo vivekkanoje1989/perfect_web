@@ -21,8 +21,9 @@ class Perfect extends CI_Controller {
 	 */
 	function __construct() {
 		parent::__construct();
-		$this->load->helper("url");
+		$this->load->helper("url"); 
         $this->load->model("Lr_records_Model");
+        $this->load->model("memo_records_Model");
         $this->load->library("pagination");
 	}
 		
@@ -73,11 +74,11 @@ class Perfect extends CI_Controller {
 	}
 
 	public function goMemo(){
-		$this->load->view('lr_records', $data);
+		$this->pagination_memo();
 	}
 
 	public function goLR(){
-		$this->pagination_rec();
+		$this->pagination_lr();
 	}
 
 	public function login(){
@@ -99,7 +100,7 @@ class Perfect extends CI_Controller {
 			$id = 0;
 			//$data['result'] = $this->show_lr($id);
 			if ($v[0]->user_type == "admin") {
-				// $this->pagination_rec();
+				// $this->pagination_lr();
 				$this->godashboard();
 			}else{
 				$data = array(
@@ -119,11 +120,18 @@ class Perfect extends CI_Controller {
 			
 	}
 
-	public function back() {
+	public function back_lr() {
 		/*$id = 0;
 		$data['result'] = $this->show_lr($id);
 		$this->load->view('lr_records', $data);*/
-		$this->pagination_rec();
+		$this->pagination_lr();
+	}
+
+	public function back_memo() {
+		/*$id = 0;
+		$data['result'] = $this->show_lr($id);
+		$this->load->view('lr_records', $data);*/
+		$this->pagination_memo();
 	}
 
 	// Logout from admin page
@@ -139,10 +147,10 @@ class Perfect extends CI_Controller {
 		$this->load->view('login', $data);
 	}
 
-	public function pagination_rec() {
+	public function pagination_lr() {
 		$year =0; $month =0;
 		$config = array();
-        $config["base_url"] = base_url() . "index.php/perfect/pagination_rec/";        
+        $config["base_url"] = base_url() . "index.php/perfect/pagination_lr/";        
         $config["per_page"] = 10;
         $config["uri_segment"] = 3;
 
@@ -165,11 +173,36 @@ class Perfect extends CI_Controller {
         $data["links"] = $this->pagination->create_links();
         $this->load->view('lr_records', $data);
     }
-
 	
 	public function refresh() {
-		$this->pagination_rec();
+		$this->pagination_lr();
 	}
+	
+	public function pagination_memo() {
+		$check_lr_no = "";
+		$config = array();
+        $config["base_url"] = base_url() . "index.php/perfect/pagination_memo/";        
+        $config["per_page"] = 10;
+        $config["uri_segment"] = 3;
+
+		if (isset($_POST['check_lr_no'])) {
+			//print_r($_POST);
+			$check_lr_no = $_POST['check_lr_no'];
+			$config["total_rows"] = $this->memo_records_Model->memo_count($check_lr_no);
+		}else{
+			$check_lr_no = "";
+			$config["total_rows"] = $this->memo_records_Model->memo_count($check_lr_no);
+		}
+		
+        $this->pagination->initialize($config);
+
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $data["results"] = $this->memo_records_Model->
+            fetch_memo($config["per_page"], $page);
+        $data["links"] = $this->pagination->create_links();
+        $this->load->view('memo_records', $data);
+    }
+
 	public function sync_users() {
 		$query = $this->db->query("SELECT * FROM users");
 		if($query->num_rows() > 0){
@@ -215,8 +248,13 @@ class Perfect extends CI_Controller {
 				'to_l' => $data->data->to, 
 				'consigner_name' => $data->data->consigner_name,
 				'consigner_Addr' => $data->data->consigner_Addr,
-				'consignee_name' => $data->data->consignee_name,
-				'consignee_Addr' => $data->data->consignee_Addr,
+				'consignee_name' => $data->data->consignee_name,			
+				'consignee_Addr_l1' => $data->data->consignee_Addr_l1,		 
+				'consignee_Addr_l2' => $data->data->consignee_Addr_l2,			 
+				'consignee_Addr_l3' => $data->data->consignee_Addr_l3,			 
+				'consignee_state' => $data->data->consignee_state,		 
+				'consignee_state_cd' => $data->data->consignee_state_cd,			 
+				'consignee_gstn' => $data->data->consignee_gstn,
 				'invoice_no' => $data->data->invoice_no,
 				'vehicle_no' => $data->data->vehicle_no,
 				'material_type' => $data->data->material_type,
@@ -401,12 +439,42 @@ class Perfect extends CI_Controller {
                 $tmp['consignee_name'] = "";
               }
 
-              if ($record->consignee_Addr) { 
-               $tmp['consignee_Addr'] = $record->consignee_Addr;
+              if ($record->consignee_Addr_l1) { 
+               $tmp['consignee_Addr_l1'] = $record->consignee_Addr_l1;
               }else{
-                $tmp['consignee_Addr'] = "";
-              }
+                $tmp['consignee_Addr_l1'] = "";
+							}
+							
+							if ($record->consignee_Addr_l2) { 
+								$tmp['consignee_Addr_l2'] = $record->consignee_Addr_l2;
+							 }else{
+								 $tmp['consignee_Addr_l2'] = "";
+							 }
 
+							 if ($record->consignee_Addr_l3) { 
+								$tmp['consignee_Addr_l3'] = $record->consignee_Addr_l3;
+							 }else{
+								 $tmp['consignee_Addr_l3'] = "";
+							 }
+
+							 if ($record->consignee_state) { 
+								$tmp['consignee_state'] = $record->consignee_state;
+							 }else{
+								 $tmp['consignee_state'] = "";
+							 }
+
+							 if ($record->consignee_state_cd) { 
+								$tmp['consignee_state_cd'] = $record->consignee_state_cd;
+							 }else{
+								 $tmp['consignee_state_cd'] = "";
+							 }
+
+							 if ($record->consignee_gstn) { 
+								$tmp['consignee_gstn'] = $record->consignee_gstn;
+							 }else{
+								 $tmp['consignee_gstn'] = "";
+							 }								 
+							
               if ($record->invoice_no) {
                 $tmp['invoice_no'] = $record->invoice_no;
               }else{
@@ -520,6 +588,97 @@ class Perfect extends CI_Controller {
 		$data['result'] = $this->show_lr($id);
 		//print_r($data);
 		$this->load->view('lr_records_edit', $data);
+	}
+
+	public function show_memo($id) {
+		if ($id == 0) {
+			$query = $this->db->query("SELECT * FROM memo_tbl ORDER BY id DESC");
+		}else{			
+			$query = $this->db->query("SELECT * FROM memo_tbl WHERE id= '".$id."' ");
+		}
+		$records = $query->result();
+        	$rs = array();	
+
+		foreach($records as $record){
+        	$tmp = array();	
+			   
+			if ($record->id !== null) {
+        		$tmp['id'] = $record->id;
+        	}else{
+        		$tmp['id'] = "";
+        	}  
+
+        	  if ($record->lr_no) {         
+                $tmp['lr_no'] =  $record->lr_no;
+              }else{
+                $tmp['lr_no'] = "";
+              }
+
+             	if ($record->invoice_no) {
+                $tmp['invoice_no'] = $record->invoice_no;
+              }else{
+                $tmp['invoice_no'] = "";
+              }
+
+              if ($record->memo_from) {
+                $tmp['memo_from'] = $record->memo_from;
+              }else{
+                $tmp['memo_from'] = "";
+              }    
+
+              if ($record->memo_to) { 
+                $tmp['memo_to'] = $record->memo_to;
+              }else{
+                $tmp['memo_to'] = "";
+              }
+
+              if ($record->lorry_no) { 
+                $tmp['lorry_no'] = $record->lorry_no;
+              }else{
+                $tmp['lorry_no'] = "";
+              }
+
+              if ($record->date) { 
+                $tmp['date'] = $record->date;
+              }else{
+                $tmp['date'] = "";
+              }
+
+              if ($record->veh_type) { 
+               $tmp['veh_type'] = $record->veh_type;
+              }else{
+                $tmp['veh_type'] = "";
+              }
+
+              if ($record->freight) { 
+               $tmp['freight'] = $record->freight;
+              }else{
+                $tmp['freight'] = "";
+              }
+
+              if ($record->advance) { 
+               $tmp['advance'] = $record->advance;
+              }else{
+                $tmp['advance'] = "";
+              }
+
+              if ($record->created) { 
+               $tmp['created'] = $record->created;
+              }else{
+                $tmp['created'] = "";
+              }
+              array_push($rs, $tmp);   	
+        }
+
+        return $rs;
+	}
+
+	public function edit_memo($id) {
+		//$query = $this->db->query("SELECT * FROM lr_tbl WHERE id = '".$id."' ");
+		//$data = $query->result();
+		$data['result'] = $this->show_memo($id);
+		//print_r($data);
+		$this->load->view('memo_records_edit', $data);
 	}
 
 	//convert currency number to word
@@ -649,7 +808,12 @@ class Perfect extends CI_Controller {
 			$consigner_name = $_POST['consigner_name'];
 			$consigner_Addr = $_POST['consigner_Addr'];
 			$consignee_name = $_POST['consignee_name'];
-			$consignee_Addr = $_POST['consignee_Addr'];			 
+			$consignee_Addr_l1 = $_POST['consignee_Addr_l1'];			 
+			$consignee_Addr_l2 = $_POST['consignee_Addr_l2'];			 
+			$consignee_Addr_l3 = $_POST['consignee_Addr_l3'];			 
+			$consignee_state = $_POST['consignee_state'];			 
+			$consignee_state_cd = $_POST['consignee_state_cd'];			 
+			$consignee_gstn = $_POST['consignee_gstn'];			 
 			$invoice_no = $_POST['invoice_no'];
 			$vehicle_no = $_POST['vehicle_no'];
 			$material_type = $_POST['material_type'];
@@ -666,16 +830,25 @@ class Perfect extends CI_Controller {
 			$unloading_charge = $_POST['unloading_charge'];
 			$loading_unloading = $loading_charge + $unloading_charge;
 			$extracollectioncharge = $_POST['extracollectioncharge'];
-			$statsticalcharge = $_POST['statsticalcharge']; 
-			$total = round(($frieght_rate + $detaintion + $loading_unloading + $extracollectioncharge + $statsticalcharge), 2);
+			$statsticalcharge = $_POST['statsticalcharge'];
 			$mail_box = $_POST['mail_box'];
-
-			$bill_word = $this->convert_number_to_words($total);
+			$memo_advance = $this->memo_records_Model->memo_get_advance($lrno); 
+			$total = round(($frieght_rate + $detaintion + $loading_unloading + $extracollectioncharge + $statsticalcharge), 2);
+			$total = ($total - $memo_advance);		
+			$bill_word = $this->convert_number_to_words($total);		
+			
 		}else{}
 
 		if ($_POST['submit'] == "Update") {
 			
 			$charges = array(
+					'consignee_name' => $consignee_name,
+					'consignee_Addr_l1' => $consignee_Addr_l1,
+					'consignee_Addr_l2' => $consignee_Addr_l2,
+					'consignee_Addr_l3' => $consignee_Addr_l3,
+					'consignee_state' => $consignee_state,
+					'consignee_state_cd' => $consignee_state_cd,
+					'consignee_gstn' => $consignee_gstn,
 					'material_type' => $material_type,
 					'delivery_date' => $delivery_date,
 					'POD_receiptno' => $POD_receiptno,
@@ -736,9 +909,9 @@ class Perfect extends CI_Controller {
 			);
 			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber.'')->applyFromArray($header_style);
 			//set cell A1 content with some text
-			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'PERFECT TRANSPORT SOLUTIONS');
+			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'PERFECT TRANSPORT SOLUTION');
 			//merge cell A1 until D1
-			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':K'.$rowNumber.'');
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':T'.$rowNumber.'');
 			//set aligment to center for that merged cell (A1 to D1)
 			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(25);
@@ -754,18 +927,18 @@ class Perfect extends CI_Controller {
 			);	
 			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber.'')->applyFromArray($header_style1);
 			//set cell A1 content with some text
-			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'A/p Near Chawala School, Spine Road, Gate No- 1264, Sharad Nagar, Chickali, Pune- 411 019');
+			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'A/p Near Chawala School, Spine Road, Gate No- 1264, Sharad Nagar, Chikhali, Pune- 411 019');
 			//merge cell A1 until D1
-			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':K'.$rowNumber.'');
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':T'.$rowNumber.'');
 			//set aligment to center for that merged cell (A1 to D1)
 			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(12);
 			$rowNumber++;
 			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber.'')->applyFromArray($header_style1);
 			//set cell A1 content with some text
-			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'Email : perfectransportsolutions@gmail.com');
+			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'Email : perfectransportsolutions@gmail.com  Website: www.perfecttransports.com');
 			//merge cell A1 until D1
-			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':K'.$rowNumber.'');
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':T'.$rowNumber.'');
 			//set aligment to center for that merged cell (A1 to D1)
 			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(12);
@@ -774,7 +947,7 @@ class Perfect extends CI_Controller {
 			//set cell A1 content with some text
 			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'Mob. No. : +919158470310, +917769888817');
 			//merge cell A1 until D1
-			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':K'.$rowNumber.'');
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':T'.$rowNumber.'');
 			//set aligment to center for that merged cell (A1 to D1)
 			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(12);
@@ -788,20 +961,36 @@ class Perfect extends CI_Controller {
 				)
 			);	
 
-			$rowNumber6 = $rowNumber + 6;
+			$rowNumber10 = $rowNumber + 10;
 			
-			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber6.'')->applyFromArray($text_style);
-			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'PAN No. : ');
-			$this->excel->getActiveSheet()->setCellValue('I'.$rowNumber.'', 'VENDOR CODE. : ');
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber10.'')->applyFromArray($text_style);
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'Details of Customer. : ');
+			$this->excel->getActiveSheet()->setCellValue('I'.$rowNumber.'', 'Description of Service. : Vehicle Hiring Service');
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'Bill of Supply : PTS/11/17-18');
 			$rowNumber++;
 			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'To,');
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'MLL Reference : F18PTSAS40500011');
 			$rowNumber++;
-			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'M/S. Mahindra Logistics Limited Automotive ');			
-			$this->excel->getActiveSheet()->setCellValue('I'.$rowNumber.'', 'Bill No : '.$lrno.'');
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', $consignee_name);			
+			$this->excel->getActiveSheet()->setCellValue('I'.$rowNumber.'', 'SAC : 996601');			
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'Bill of Supply Date : ');			
 			$rowNumber++;
-			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'Sector , Akuril Road, Kandivali(East), Mumbai');
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', $consignee_Addr_l1);
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'PAN No. : CMAPP2800B');
 			$rowNumber++;
-			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'From : '.$from_l.' To '.$to_l.'');
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', $consignee_Addr_l2);
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'Vendor Code No. : MHA0068501');
+			$rowNumber++;
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', $consignee_Addr_l3);
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'Place of Supply : MAHARASHTRA');
+			$rowNumber++;
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'State : '.$consignee_state.'');
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'State Code : 27');
+			$rowNumber++;
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'State Code : '.$consignee_state_cd.'') ;
+			$this->excel->getActiveSheet()->setCellValue('O'.$rowNumber.'', 'GST No : 27CMAPP2800B2ZM') ;
+			$rowNumber++;
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'GSTN No : '.$consignee_gstn.'');
 			$rowNumber++;
 			$rowNumber++;
 
@@ -919,7 +1108,7 @@ class Perfect extends CI_Controller {
 			$this->excel->getActiveSheet()->setCellValue('P'.$rowNumber.'', ''.$loading_unloading.'');	
 			$this->excel->getActiveSheet()->setCellValue('Q'.$rowNumber.'', ''.$detaintion.'');	
 			$this->excel->getActiveSheet()->setCellValue('R'.$rowNumber.'', ''.$total.'');	
-			$this->excel->getActiveSheet()->setCellValue('S'.$rowNumber.'', '');	
+			$this->excel->getActiveSheet()->setCellValue('S'.$rowNumber.'', 'Advance Rs.'.$memo_advance.'');	
 			$rowNumber++;
 			$this->excel->getActiveSheet()->mergeCells('B'.$rowNumber.':C'.$rowNumber.'');
 			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.'')->getFont()->setBold(true);
@@ -933,6 +1122,21 @@ class Perfect extends CI_Controller {
 			$rowNumber++;
 			$rowNumber++;
 
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.'')->applyFromArray($text_style);
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', '1');
+			$rowNumber++;
+
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.'')->applyFromArray($text_style);
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', '2');
+			$rowNumber++;
+
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.'')->applyFromArray($text_style);
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', '3');
+			$rowNumber++;
+
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.'')->applyFromArray($text_style);
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', '4');
+			$rowNumber++;
 						
 			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.'')->applyFromArray($text_style);
 			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'For');
@@ -969,5 +1173,209 @@ class Perfect extends CI_Controller {
 		$this->load->view('lr_records_edit', $data); 
 	}
 
+	//Generate MIS
+	public function gen_mis(){
+		if($_POST){
+			$daterangeFrom = $_POST['daterangeFrom'];
+			$daterangeTo = $_POST['daterangeTo'];
+			$get_mis = $this->Lr_records_Model->get_mis($daterangeFrom, $daterangeTo); //get mis data
+			$getCount_mis = sizeof($get_mis);
+			// print_r($getCount_mis);exit;
+			//create xls format			
+			//load our new PHPExcel library
+			$this->load->library('excel');
+			//activate worksheet number 1
+			$this->excel->setActiveSheetIndex(0);
+			$this->excel->getActiveSheet()->setShowGridlines(false);
+			//ORIENTATION_LANDSCAPE
+			$this->excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+			//PAPERSIZE_A4
+			$this->excel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+			//name the worksheet
+			$this->excel->getActiveSheet()->setTitle('MIS'.$daterangeFrom.'_'. $daterangeTo.'');
+			$rowNumber = 2;
+			$header_style = array(
+				'font'  => array(
+						'bold'  => true,
+						'color' => array('rgb' => '#000000'),
+						'size'  => 14,
+						'name'  => 'Times'
+				)
+			);
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber.'')->applyFromArray($header_style);
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'PERFECT TRANSPORT SOLUTION');
+			//merge cell A1 until D1
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':I'.$rowNumber.'');
+			//set aligment to center for that merged cell (A1 to D1)
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(25);
+			$rowNumber++;
+
+			$header_style1 = array(
+				'font'  => array(
+						'bold'  => true,
+						'color' => array('rgb' => '#000000'),
+						'size'  => 9,
+						'name'  => 'san-serif'
+				)
+			);	
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber.'')->applyFromArray($header_style1);
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'A/p Near Chawala School, Spine Road, Gate No- 1264, Sharad Nagar, Chikhali, Pune- 411 019');
+			//merge cell A1 until D1
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':I'.$rowNumber.'');
+			//set aligment to center for that merged cell (A1 to D1)
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(12);
+			$rowNumber++;
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber.'')->applyFromArray($header_style1);
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'Email : perfectransportsolutions@gmail.com  Website: www.perfecttransports.com');
+			//merge cell A1 until D1
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':I'.$rowNumber.'');
+			//set aligment to center for that merged cell (A1 to D1)
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(12);
+			$rowNumber++;
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.':K'.$rowNumber.'')->applyFromArray($header_style1);
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('A'.$rowNumber.'', 'Mob. No. : +919158470310, +917769888817');
+			//merge cell A1 until D1
+			$this->excel->getActiveSheet()->mergeCells('A'.$rowNumber.':I'.$rowNumber.'');
+			//set aligment to center for that merged cell (A1 to D1)
+			$this->excel->getActiveSheet()->getStyle('A'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(12);
+			$rowNumber = $rowNumber + 3;		
+			
+			$rowNumber++;
+
+			$styleArray4 = array(
+				'font'  => array(						
+					'size'  => 10,						
+				),
+				'borders' => array(
+				'allborders' => array(
+				'style' => PHPExcel_Style_Border::BORDER_THIN,
+				'color' => array('argb' => '#000000'),
+				),
+				),
+			);
+
+			$rowNumber3 = $rowNumber + $getCount_mis;
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber3.'')->applyFromArray($styleArray4);
+			//text wrap
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber3.'')->getAlignment()->setWrapText(true);
+			$styleArray3 = array(
+				'font'  => array(						
+					'size'  => 10,						
+				),
+				'borders' => array(
+				'bottom' => array(
+				'style' => PHPExcel_Style_Border::BORDER_THICK,
+				'color' => array('argb' => '#000000'),
+				),
+				),
+			);
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber.'')->applyFromArray($styleArray3);
+			//text wrap
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber.'')->getAlignment()->setWrapText(true);
+			//set aligment to center for that merged cell
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);	
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber.'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			//$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(35);
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', 'From');						
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('C'.$rowNumber.'', 'TO');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('D'.$rowNumber.'', 'LR No');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('E'.$rowNumber.'', 'Vehicle No');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('F'.$rowNumber.'', 'Vehicle Type');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('G'.$rowNumber.'', 'LR Date');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('H'.$rowNumber.'', 'Unloading Date');
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('I'.$rowNumber.'', 'POD Recp.No');
+			
+			$rowNumber++;
+			//values from database
+			//$this->excel->getActiveSheet()->getRowDimension($rowNumber)->setRowHeight(24);
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber3.'')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);	
+			$this->excel->getActiveSheet()->getStyle('B'.$rowNumber.':I'.$rowNumber3.'')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+for($i=0; $i< $getCount_mis; $i++){
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('B'.$rowNumber.'', ''.$get_mis[$i]['from_l'].'');						
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('C'.$rowNumber.'', ''.$get_mis[$i]['to_l'].'');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('D'.$rowNumber.'', ''.$get_mis[$i]['lrno'].'');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('E'.$rowNumber.'', ''.$get_mis[$i]['vehicle_no'].'');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('F'.$rowNumber.'', ''.$get_mis[$i]['vehicle_type'].'');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('G'.$rowNumber.'', ''.$get_mis[$i]['Lr_Date'].'');			
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('H'.$rowNumber.'', ''.$get_mis[$i]['delivery_date'].'');
+
+			//set cell A1 content with some text
+			$this->excel->getActiveSheet()->setCellValue('I'.$rowNumber.'', ''.$get_mis[$i]['POD_receiptno'].'');			
+
+			$rowNumber++;
+		}
+			//specify print area
+			$this->excel->getActiveSheet()->getPageSetup()->setPrintArea('A1:P'.$rowNumber.'');			
+			$filename='MIS-'.date('d-m-y').'.xls'; //save our workbook as this file name
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache			            
+			//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+			//if you want to save it as .XLSX Excel 2007 format
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			//force user to download the Excel file without writing it to server's HD
+			$objWriter->save('php://output');
+
+		}else{
+			return false;
+		}
+	}
+
+	//cutomise memo
+	public function custom_memo() {
+	
+		if($_POST['submit'] == "Update") {
+			$id = $_POST['id'];			
+			$charges = array(
+				'advance' => $_POST['advance']
+			);
+			$this->db->where(array( 'id' =>$id));
+			$this->db->update('memo_tbl', $charges);
+
+		}else {}
+		//redirect to page with data
+		$query = $this->db->query("SELECT * FROM memo_tbl WHERE id = '".$id."' ");
+		$data = $query->result();
+		$data['result'] = $this->show_memo($id);
+		//print_r($data);
+		$this->load->view('memo_records_edit', $data); 
+	}
 	
 }// main class ends

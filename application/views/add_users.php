@@ -19,7 +19,7 @@ header("location: login");
         <meta name="description" content="Sticky Table Headers Revisited: Creating functional and flexible sticky table headers" />
         <meta name="keywords" content="Sticky Table Headers Revisited" />
         <meta name="author" content="Codrops" />
-        <link rel="shortcut icon" href="../favicon.ico">
+        <link rel="shortcut icon" href="../../favicon.ico">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/lr_recpage/normalize.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/lr_recpage/demos.css" />

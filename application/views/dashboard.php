@@ -15,11 +15,11 @@ header("location: login");
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Lr records</title>
+        <title>Dashboard</title>
         <meta name="description" content="Sticky Table Headers Revisited: Creating functional and flexible sticky table headers" />
         <meta name="keywords" content="Sticky Table Headers Revisited" />
         <meta name="author" content="Codrops" />
-        <link rel="shortcut icon" href="../favicon.ico">
+        <link rel="shortcut icon" href="../../favicon.ico">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/lr_recpage/normalize.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/lr_recpage/demos.css" />
@@ -105,6 +105,13 @@ header("location: login");
                 font-style: italic;
                 color: black;
             }
+            .row{
+                display: flex;
+            }
+            .col-50{
+                width: 50%;
+                padding: 6px;
+            }
         </style>
     </head>
     <body>
@@ -127,25 +134,46 @@ header("location: login");
             
           
             <div class="component">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title corner_btn">Today's Lorry Recipt</h3>
-                    <a class="pull-right view_btn" href="<?php echo base_url();?>index.php/perfect/goLR"  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
-                </div>
-                <div class="panel-body">
-                    <span class="countl" ><?php echo $count_lr; ?></span> <span class="textd">Lorry Recipt recorded today.</span>
+        <div class="row">
+            <div class="col-50">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title corner_btn">Today's Lorry Recipt</h3>
+                        <a class="pull-right view_btn" href="<?php echo base_url();?>index.php/perfect/goLR"  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
+                    </div>
+                    <div class="panel-body">
+                        <span class="countl" ><?php echo $count_lr; ?></span> <span class="textd">Lorry Recipt recorded today.</span>
+                    </div>
                 </div>
             </div>
-
-            <div class="panel panel-success">
+            <div class="col-50">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title corner_btn">Today's Memo</h3>
+                        <a class="pull-right view_btn" href="<?php echo base_url();?>index.php/perfect/goMemo"  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
+                    </div>
+                    <div class="panel-body">
+                        <span class="countm"><?php echo $count_memo; ?></span> <span class="textd"> Memo recorded today.</span>
+                    </div>
+                </div> 
+            </div> 
+        </div>
+            <div class="panel panel-warning">
                 <div class="panel-heading">
-                    <h3 class="panel-title corner_btn">Today's Memo</h3>
-                    <a class="pull-right view_btn" href=""  ><i class="fa fa-eye" aria-hidden="true" style="font-size:20px;"></i>  View Records</a>
+                    <h3 class="panel-title corner_btn">Generate MIS</h3>                    
                 </div>
                 <div class="panel-body">
-                    <span class="countm"><?php echo $count_memo; ?></span> <span class="textd"> Memo recorded today.</span>
+                    <form method="post" action="<?php echo base_url();?>index.php/perfect/gen_mis">
+                        <span class="textd">Select date : </span>
+                        <input type="date" name="daterangeFrom" value=""  required />
+                        <input type="date" name="daterangeTo" value="" required />
+                        <button type="submit" class="btn btn-secondary">MIS</button>
+                    </form>  
                 </div>
-            </div>               
+            </div>     
+
+                
+                    
             
         </div><!-- /container -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -153,3 +181,5 @@ header("location: login");
         <script src="<?php echo base_url(); ?>js/jquery.stickyheader.js"></script>
     </body>
 </html>
+
+
